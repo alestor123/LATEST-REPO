@@ -9,6 +9,7 @@ options  = require('minimist')(process.argv.slice(2)),
 app = express(),
 api = 'https://api.github.com/graphql',
 port = process.env.PORT || options.port || options.p || 3000,
+number = process.env.c || options.number || options.n || 50,
 token = process.env.TOKEN || options.token || options.t;
 
 if(options.v || options.version){
@@ -44,40 +45,6 @@ if (token) {// add express limit
 app.get('/github', (req,res) => {
 	res.redirect(pck.homepage)
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // logger 
 function logger(message){
