@@ -1,0 +1,24 @@
+{
+  "name": "latest-repos",
+  "version": "1.0.0",
+  "description": "This is a simple code for an api for getting latest  repos of a user",
+  "main": "App.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alestor123/LATEST-REPO.git"
+  },
+  "author": "Alestor Aldous",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alestor123/LATEST-REPO/issues"
+  },
+  "homepage": "https://github.com/alestor123/LATEST-REPO#readme"
+}
