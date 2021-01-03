@@ -9,7 +9,7 @@ options  = require('minimist')(process.argv.slice(2)),
 app = express(),
 api = 'https://api.github.com/graphql',
 port = process.env.PORT || options.port || options.p || 3000,
-number = process.env.c || options.number || options.n || 50,
+number = process.env.MAXNUM || options.number || options.n || 50,
 token = process.env.TOKEN || options.token || options.t;
 
 if(options.v || options.version){
@@ -45,7 +45,48 @@ if (token) {// add express limit
 app.get('/github', (req,res) => {
 	res.redirect(pck.homepage)
 })
-
+app.get('/user/:name',(req, res) => {
+    logger.req(`Name : ${req.params.name}`,req)
+    axios.post(api, 
+        {query: 
+            `
+	query ($cursor: String) {
+		user(login: "${req.params.name}") {
+			repositories(
+				last: ${number},
+				isFork: false,
+				isLocked: false,
+				ownerAffiliations: OWNER,
+				privacy: PUBLIC,
+				orderBy: {
+					field: CREATED_AT,
+					direction: ASC
+				}
+				before: $cursor
+			) {
+				edges {
+					node {
+						name
+						description
+						url
+						primaryLanguage {
+							name
+							color
+						}
+						forks {
+							totalCount
+						}
+					}
+				}
+			}
+		}
+	}
+`,variables: { login: req.params.name },})
+      .then((response) => {
+        res.json(response.data)
+    }).catch((error) => {
+            res.send(error)
+            logger.err(error)})})
 // logger 
 function logger(message){
     console.log(chalk.bgYellow.red(`(LOG):${Date()}:${message}`))
